@@ -1,16 +1,13 @@
-import {computed, Ref, ref, watch} from "vue";
+import {computed, ref, watch} from "vue";
 
-const modals: Ref<Record<string, {
-	ref: Ref<HTMLElement|undefined>,
-	waiting: boolean
-}>> = ref({});
+const modals = ref({});
 
-export const useModal = <T extends string>() => ({
-	modalIsOpened(name: T) {
+export const useModal = () => ({
+	modalIsOpened(name) {
 		return computed(() => modals.value[name] ? modals.value[name].waiting : false);
 	},
 
-	registerModal(name: T, _ref: Ref<HTMLElement|undefined>) {
+	registerModal(name, _ref) {
 		modals.value = {
 			...modals.value,
 			[name]: {
@@ -42,16 +39,14 @@ export const useModal = <T extends string>() => ({
 		})
 	},
 
-	openModal(name: T) {
+	openModal(name) {
 		if (!modals.value[name].waiting) {
-			// @ts-ignore
 			modals.value[name]?.ref.classList?.remove('closed');
 		}
 	},
 
-	closeModal(name: T) {
+	closeModal(name) {
 		if (!modals.value[name].waiting) {
-			// @ts-ignore
 			modals.value[name]?.ref.classList?.add('closed');
 		}
 	}

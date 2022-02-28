@@ -5,18 +5,15 @@
     pb: !p0 && (!!pb || !!py),
     pt: !p0 && (!!pt || !!py),
     p0
-  }" :style="{
-    '--pl': (px ? px : pl) + 'px',
-    '--pr': (px ? px : pr) + 'px',
-    '--pb': (py ? py : pb) + 'px',
-    '--pt': (py ? py : pt) + 'px',
   }">
     <slot></slot>
   </div>
 </template>
 
-<script setup lang="ts">
-defineProps({
+<script setup>
+import {computed} from "vue";
+
+const props = defineProps({
   pl: Number,
   pr: Number,
   pb: Number,
@@ -27,12 +24,22 @@ defineProps({
     default: false
   }
 });
+
+const pl = computed(() => (props.px ?? props.pl) + 'px');
+const pr = computed(() => (props.px ?? props.pr) + 'px');
+const pb = computed(() => (props.py ?? props.pb) + 'px');
+const pt = computed(() => (props.py ?? props.pt) + 'px');
 </script>
 
 <style scoped>
 div {
   width: 100%;
   height: 100%;
+
+  --pl: v-bind(pl);
+  --pr: v-bind(pr);
+  --pb: v-bind(pb);
+  --pt: v-bind(pt);
 }
 
 div.pl {

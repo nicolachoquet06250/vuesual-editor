@@ -9,8 +9,8 @@
   </button>
 </template>
 
-<script setup lang="ts">
-import {computed, onMounted, ref, Ref} from "vue";
+<script setup>
+import {defineEmits, computed, onMounted, ref} from "vue";
 import {FaIcon} from "../../../../../types/icons";
 
 const emit = defineEmits(['ready', 'click', 'mouseover', "mouseout"]);
@@ -40,7 +40,7 @@ const props = defineProps({
 const _icon = computed(() => props.close ? FaIcon.CLOSE : props.icon);
 const activeColor = computed(() => props.activeColor);
 
-const button: Ref<HTMLElement|undefined> = ref<HTMLElement>();
+const button = ref();
 
 onMounted(() => {
   emit('ready', button.value);

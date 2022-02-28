@@ -15,7 +15,7 @@
                 :no-border="true"
                 :close="true"
                 :active-color="'red'"
-                @click="closeModal(name)" />
+                @click="closeModal((name ?? ''))" />
       </header>
 
       <main>
@@ -29,10 +29,10 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {onClickOutside} from "@vueuse/core";
 import {useModal} from "../../../../hooks/modal";
-import {Ref, ref, useSlots} from "vue";
+import {ref, useSlots} from "vue";
 import Button from "../forms/buttons/Button.vue";
 
 const props = defineProps({
@@ -42,8 +42,8 @@ const props = defineProps({
 
 const slots = useSlots();
 
-const modal: Ref<HTMLElement|undefined> = ref<HTMLElement>();
-const modalContent: Ref<HTMLElement|undefined> = ref<HTMLElement>();
+const modal = ref();
+const modalContent = ref();
 
 const { registerModal, closeModal } = useModal();
 

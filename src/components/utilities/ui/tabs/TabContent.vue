@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {useUniqId} from "../../../../hooks/identifier";
 
 defineProps({

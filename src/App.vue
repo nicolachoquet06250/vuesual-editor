@@ -21,7 +21,7 @@
   </Modal>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import VuesualEditor from './components/VuesualEditor.vue';
 import Modal from "./components/utilities/ui/modals/Modal.vue";
 import {Modals} from './types';
@@ -36,9 +36,9 @@ const { closeModal } = useModal();
 
 registerComponents();
 
-const data = ref<Record<string, any>>({});
+const data = ref({});
 
-const handleSend = (e: { data: Record<string, any> }) => {
+const handleSend = e => {
   data.value = e.data;
 };
 </script>

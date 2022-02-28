@@ -16,8 +16,8 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import {ref, Ref, watch} from "vue";
+<script setup>
+import {ref, watch, defineEmits} from "vue";
 import {ValidateMoment} from "../../../../../types/input-validator";
 import {match} from "../../../../../hooks/string";
 
@@ -34,20 +34,20 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:modelValue', 'input']);
 
-const value: Ref<string|String> = ref<string>(props.modelValue ?? '');
-const validated: Ref<boolean|null> = ref<boolean|null>(null);
+const value = ref(props.modelValue ?? '');
+const validated = ref(null);
 
-const validField = (e?: InputEvent): boolean => {
+const validField = e => {
   if (props.validator && props.validOn) {
     const v = e && e.target?.value !== null && e.target?.value !== undefined ? e.target?.value : value.value;
 
-    return match(props.validator, v);
+    return match(props.validator, v.toString());
   }
 
   return true;
 };
 
-const handleInput = (e: InputEvent) => {
+const handleInput = e => {
   if (props.validator && props.validOn === ValidateMoment.INPUT) {
     emit('update:modelValue', (e.target?.value ?? ''));
     validated.value = validField(e);

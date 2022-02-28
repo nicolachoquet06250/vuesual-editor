@@ -24,7 +24,7 @@
   <AddComponentModal />
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {ref, defineEmits, computed, VueElement} from "vue"
 import {useResize} from "../hooks/resize";
 import VuesualEditorContent from "./VuesualEditorContent.vue";
@@ -37,7 +37,7 @@ defineProps({
   layout: [VueElement, Object]
 });
 
-const sidebar = ref<HTMLElement>();
+const sidebar = ref();
 
 const {
   closed: sidebarClosed,
@@ -51,7 +51,7 @@ const _minSidebarWidth = computed(() => minSidebarWidth.value + 'px');
 const oldSidebarWidth = ref(minSidebarWidth.value);
 const resizerWidth = computed(() => sidebarClosed.value ? 0 : oldSidebarWidth.value);
 
-const handleResize = (e: { width: number }) => {
+const handleResize = (e) => {
   if (!sidebarClosed.value) {
     oldSidebarWidth.value = e.width;
   }

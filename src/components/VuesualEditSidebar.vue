@@ -19,7 +19,7 @@
       <section class="component-builder-card opened"
                :style="`${i > 0 ? 'margin-top: 5px;' : ''}`">
         <header @click.stop.prevent="toggleOpenCard($event)">
-          <SimpleBox px="5">
+          <SimpleBox :px="5">
             <Container>
               <Row>
                 <Col>
@@ -65,12 +65,11 @@
   </footer>
 </template>
 
-<script setup lang="ts">
-import {Ref, ref, defineEmits} from "vue";
+<script setup>
+import {ref, defineEmits} from "vue";
 import {useModal} from "../hooks/modal";
 import {Modals} from '../types';
 import {useComponents} from "../hooks/editor-components";
-import type {Component, DataType, EditorComponent} from '../types/hooks';
 import Button from "./utilities/ui/forms/buttons/Button.vue";
 import {FaIcon} from "../types/icons";
 import SimpleBox from "./utilities/ui/boxes/SimpleBox.vue";
@@ -84,7 +83,7 @@ const emit = defineEmits(['open', 'close', 'send']);
 const { openModal } = useModal();
 const { pageComponents: components, setData, deleteComponentInPage: unregisterComponent } = useComponents();
 
-const isOpened: Ref<boolean> = ref(true);
+const isOpened = ref(true);
 
 const handleToggleSidebar = () => {
   emit((isOpened.value ? 'close' : 'open'));
@@ -92,25 +91,25 @@ const handleToggleSidebar = () => {
 };
 
 const handleSend = () => {
-  const data: Array<Record<string, any>> = components.value.reduce((r: Array<Record<string, any>>, c: EditorComponent) =>
+  const data = components.value.reduce((r, c) =>
       [ ...r, { _name: c.slug, ...(c.data ?? {}) } ], []);
   emit('send', { data });
   openModal(Modals.ValidateData);
 };
 
-const sendComponentData = (title: string, i: number, e: { data: DataType }) => {
+const sendComponentData = (title, i, e) => {
   // console.log(title, i, e.data);
 
   setData(title, i, e.data);
 };
 
-const handleDeleteComponent = (title: string, index: number) => {
+const handleDeleteComponent = (title, index) => {
   // console.log(title, index);
   unregisterComponent(title, index);
 };
 
 const handleExport = () => {
-  const data: Array<Record<string, any>> = components.value.reduce((r: Array<Record<string, any>>, c: EditorComponent) =>
+  const data = components.value.reduce((r, c) =>
       [ ...r, { _name: c.slug, ...(c.data ?? {}) } ], []);
   const _data = JSON.stringify(data)
   const blob = new Blob([_data], {type: 'text/plain'})
@@ -123,7 +122,7 @@ const handleExport = () => {
   }));
 };
 
-const getParent = (tag: string, root: HTMLElement|null|undefined): HTMLElement|null|undefined => {
+const getParent = (tag, root) => {
   if (root?.parentElement?.tagName.toLowerCase() === tag) {
     return root?.parentElement;
   }
@@ -138,11 +137,6 @@ const toggleOpenCard = (e) => {
     section?.classList.add('opened');
   }
   console.log(e.target, section);
-  // if (e.target.parentElement.parentElement.parentElement.parentElement.parentElement.classList.contains('opened')) {
-  //   e.target.parentElement.parentElement.parentElement.parentElement.parentElement.classList.remove('opened');
-  // } else {
-  //   e.target.parentElement.parentElement.parentElement.parentElement.parentElement.classList.add('opened');
-  // }
 };
 </script>
 

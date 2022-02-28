@@ -17,7 +17,7 @@
   </main>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {useComponents} from "../hooks/editor-components";
 import {computed, VueElement} from "vue";
 

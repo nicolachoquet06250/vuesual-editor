@@ -97,7 +97,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {computed, reactive, ref, watch} from "vue";
 import { useElementSize } from '@vueuse/core';
 import SimpleBox from "../../../components/utilities/ui/boxes/SimpleBox.vue";
@@ -142,13 +142,13 @@ const wording = {
   }
 };
 
-const data = reactive<Record<string, any>>({
+const data = reactive({
   text: props.data?.text ?? '',
   texts: props.data?.texts ?? [],
   checked: props.data?.checked ?? false
 });
 
-const card = ref<HTMLElement>();
+const card = ref();
 const { width } = useElementSize(card);
 
 const cardWidth = computed(() => width.value + 'px');
@@ -166,8 +166,8 @@ const texts = {
     sendData();
   },
 
-  delete(index: number) {
-    data.texts = data.texts.reduce((r: Array<string>, c: string, i: number) => {
+  delete(index) {
+    data.texts = data.texts.reduce((r, c, i) => {
       if (i !== index) {
         return [...r, c];
       }

@@ -11,8 +11,8 @@
   </label>
 </template>
 
-<script setup lang="ts">
-import {ref} from "vue";
+<script setup>
+import {ref, defineEmits} from "vue";
 
 const props = defineProps({
   modelValue: Boolean

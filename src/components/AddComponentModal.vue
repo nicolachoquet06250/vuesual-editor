@@ -28,8 +28,8 @@
                         @mouseout="$event.target.querySelector('img') && ($event.target.querySelector('img').style.height = '30px')">
                   <img :src="component.imagePreview"
                        style="height: 30px; transition: height .2s ease-out;"
-                       @mouseover="$event.target.style.height = '32px';"
-                       @mouseout="$event.target.style.height = '30px';" />
+                       @mouseover="$event.target && ($event.target.style.height = '32px')"
+                       @mouseout="$event.target && ($event.target.style.height = '30px')" />
                   {{component.title}}
                 </Button>
               </Col>
@@ -49,7 +49,7 @@
   </Modal>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import {Modals} from '../types';
 import Modal from "./utilities/ui/modals/Modal.vue";
 import Container from "./utilities/grid/Container.vue";
@@ -63,16 +63,14 @@ import {FaIcon} from "../types/icons";
 import Button from "./utilities/ui/forms/buttons/Button.vue";
 import {useComponents} from "../hooks/editor-components";
 import {computed, ref} from "vue";
-import {EditorComponent} from "../types/hooks";
-import {Matrix} from "../types/utils";
 
 const { closeModal } = useModal();
 const { components, injectComponentInPage } = useComponents();
 
-const currentTab = ref<string>();
+const currentTab = ref();
 
 const categoryList = computed(() => {
-  return ['all', ...components.value.reduce((r: string[], c: EditorComponent) => {
+  return ['all', ...components.value.reduce((r, c) => {
     if (r.indexOf((c.category.replace(/\ /g, '-').toLowerCase() ?? '')) === -1) {
       return [...r, (c.category.replace(/\ /g, '-').toLowerCase() ?? '')];
     }
@@ -80,7 +78,7 @@ const categoryList = computed(() => {
   }, [])];
 });
 const componentList = computed(() => {
-  const tmp: Matrix<EditorComponent> = [];
+  const tmp = [];
   let cmp = 0;
 
   for (const component of components.value) {
@@ -89,12 +87,12 @@ const componentList = computed(() => {
         tmp.push([component]);
         cmp++;
       } else if (cmp < 3) {
-        const last: Array<EditorComponent> | undefined = tmp.pop();
+        const last = tmp.pop();
 
         tmp.push([...(last ?? []), component]);
         cmp++;
       } else {
-        const last: Array<EditorComponent> | undefined = tmp.pop();
+        const last = tmp.pop();
 
         tmp.push([...(last ?? []), component]);
         cmp = 0;
@@ -105,7 +103,7 @@ const componentList = computed(() => {
   return tmp;
 });
 
-const handleTitleClick = (e: { target?: HTMLElement }) => {
+const handleTitleClick = e => {
   if (e.target?.tagName !== 'BUTTON') {
     currentTab.value = e.target?.parentElement?.getAttribute('data-target') ?? '';
   } else {
@@ -113,7 +111,7 @@ const handleTitleClick = (e: { target?: HTMLElement }) => {
   }
 };
 
-const createComponent = (title: string) => {
+const createComponent = (title) => {
   injectComponentInPage(title);
 
   closeModal(Modals.AddComponent);

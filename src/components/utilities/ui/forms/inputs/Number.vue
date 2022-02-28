@@ -1,15 +1,21 @@
 <template>
   <input type="number"
          :value="modelValue"
-         @input="$emit('update:modelValue', parseInt($event.target.value))" />
+         @input="handleInput($event)" />
 </template>
 
-<script setup lang="ts">
+<script setup>
+import {defineEmits} from 'vue';
+
 defineProps({
   modelValue: Number
 })
 
-defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
+
+const handleInput = (e) => {
+  emit('update:modelValue', parseInt(e.target?.getAttribute('value') ?? '0'))
+}
 </script>
 
 <style scoped>

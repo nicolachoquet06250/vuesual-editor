@@ -8,8 +8,8 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import {onMounted, Ref, ref} from "vue";
+<script setup>
+import {onMounted, ref, defineEmits} from "vue";
 
 const props = defineProps({
   active: String,
@@ -18,7 +18,7 @@ const props = defineProps({
 
 const emit = defineEmits(['click', 'loadDefaultTab'])
 
-const tabs: Ref<HTMLElement|undefined> = ref<HTMLElement>();
+const tabs = ref();
 
 onMounted(() => {
   if (tabs.value) {
@@ -35,8 +35,10 @@ onMounted(() => {
   }
 })
 
-const handleTabClick = (e: MouseEvent) => {
-  emit('click', e);
+const handleTabClick = e => {
+  if (e) {
+    emit('click', e);
+  }
 }
 </script>
 

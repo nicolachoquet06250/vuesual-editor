@@ -1,18 +1,17 @@
 import {computed, reactive, ref} from "vue";
-import type {DataType, EditorComponent} from "../types/hooks/editor-components";
 
-const components = reactive<{ titles: string[], components: EditorComponent[] }>({
+const components = reactive({
 	titles: [],
 	components: []
 });
 
-const pageComponents = ref<EditorComponent[]>([]);
+const pageComponents = ref([]);
 
 export const useComponents = () => ({
 	components: computed(() => components.components),
 	pageComponents: computed(() => pageComponents.value),
 
-	register(component: EditorComponent) {
+	register(component) {
 		if (components.titles.indexOf(component.title) === -1) {
 			const slug = component.title.replace(/\ /g, '-').toLowerCase();
 
@@ -21,7 +20,7 @@ export const useComponents = () => ({
 		}
 	},
 
-	setData(title: string, index: number, data: DataType) {
+	setData(title, index, data) {
 		pageComponents.value = pageComponents.value.map((c, i) => {
 			if (i === index) {
 				if (c.data) {
@@ -33,16 +32,16 @@ export const useComponents = () => ({
 		})
 	},
 
-	injectComponentInPage(title: string, defaultData: DataType = {}) {
+	injectComponentInPage(title, defaultData = {}) {
 		pageComponents.value = [
 			...pageComponents.value,
 			{ ...components.components[components.titles.indexOf(title)], data: { ...(components.components[components.titles.indexOf(title)].data ?? defaultData) } }
 		];
 	},
 
-	deleteComponentInPage(title: string, index: number) {
+	deleteComponentInPage(title, index) {
 		pageComponents.value = pageComponents.value
-			.reduce((r: EditorComponent[], c: EditorComponent, i: number) =>
+			.reduce((r, c, i) =>
 				index === i ? r : [ ...r, c ], []);
 	}
 });

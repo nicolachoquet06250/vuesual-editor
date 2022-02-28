@@ -9,8 +9,8 @@
   </Button>
 </template>
 
-<script setup lang="ts">
-import {onMounted, Ref, ref, watch} from "vue";
+<script setup>
+import {onMounted, ref, watch, defineEmits} from "vue";
 import Button from "../forms/buttons/Button.vue";
 
 const props = defineProps({
@@ -22,7 +22,7 @@ const props = defineProps({
   }
 });
 const emit = defineEmits(['click']);
-const button: Ref<HTMLElement|undefined> = ref();
+const button = ref();
 
 const selectTab = () => {
   const target = props.target;
@@ -30,12 +30,12 @@ const selectTab = () => {
   [
     ...Array.from(button.value?.parentElement?.querySelectorAll('[data-target]') ?? []),
     ...Array.from(button.value?.parentElement?.parentElement?.querySelectorAll(`[id]`) ?? [])
-  ].map((c: Element) => (c.classList.remove('active')));
+  ].map((c) => (c.classList.remove('active')));
 
   button.value?.parentElement?.parentElement?.querySelector(`[id^=${target}]`)?.classList.add('active');
 };
 
-const handleClick = (e: MouseEvent) => {
+const handleClick = (e) => {
   e.stopPropagation();
   e.preventDefault();
 
