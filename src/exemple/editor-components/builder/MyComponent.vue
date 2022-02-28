@@ -17,6 +17,22 @@
             <span> {{ wording.test_text.text }} </span>
           </Col>
         </Row>
+
+        <Row>
+          <Col>
+            <Dropdown v-model="data.select" @change="sendData()">
+              <Option target="toto">
+                Toto
+              </Option>
+              <Option target="tata">
+                Tata
+              </Option>
+              <Option target="titi">
+                Titi
+              </Option>
+            </Dropdown>
+          </Col>
+        </Row>
       </Container>
 
       <Container>
@@ -111,9 +127,10 @@ import Tab from "../../../components/utilities/ui/tabs/Tab.vue";
 import TabContent from "../../../components/utilities/ui/tabs/TabContent.vue";
 import {FaIcon} from "../../../enums/icons";
 import Switch from "../../../components/utilities/ui/forms/switches/Switch.vue";
+import Dropdown from "../../../components/utilities/ui/forms/dropdown/Dropdown.vue";
+import Option from "../../../components/utilities/ui/forms/dropdown/Option.vue";
 
 const emit = defineEmits(['send']);
-
 const props = defineProps({
   data: Object
 });
@@ -145,7 +162,8 @@ const wording = {
 const data = reactive({
   text: props.data?.text ?? '',
   texts: props.data?.texts ?? [],
-  checked: props.data?.checked ?? false
+  checked: props.data?.checked ?? false,
+  select: props.data.select ?? 'toto'
 });
 
 const card = ref();
@@ -179,7 +197,7 @@ const texts = {
 
 watch(() => data.checked, () => {
   sendData()
-})
+});
 </script>
 
 <style scoped>

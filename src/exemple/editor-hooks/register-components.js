@@ -8,7 +8,8 @@ const { register } = useComponents();
 const defaultData = {
 	text: '',
 	texts: [],
-	checked: true
+	checked: true,
+	select: 'tata'
 };
 
 export const registerComponents = () => {
