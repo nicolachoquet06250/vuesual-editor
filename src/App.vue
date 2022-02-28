@@ -24,12 +24,12 @@
 <script setup>
 import VuesualEditor from './components/VuesualEditor.vue';
 import Modal from "./components/utilities/ui/modals/Modal.vue";
-import {Modals} from './types';
+import {Modals} from './enums';
 import {ref} from "vue";
 import {useModal} from "./hooks/modal";
 import Layout from './exemple/editor-components/Layout.vue';
 import Button from "./components/utilities/ui/forms/buttons/Button.vue";
-import {FaIcon} from "./types/icons";
+import {FaIcon} from "./enums/icons";
 import {registerComponents} from "./exemple/editor-hooks/register-components";
 
 const { closeModal } = useModal();

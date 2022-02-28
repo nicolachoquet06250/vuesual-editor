@@ -109,7 +109,7 @@ import Button from "../../../components/utilities/ui/forms/buttons/Button.vue";
 import Tabs from "../../../components/utilities/ui/tabs/Tabs.vue";
 import Tab from "../../../components/utilities/ui/tabs/Tab.vue";
 import TabContent from "../../../components/utilities/ui/tabs/TabContent.vue";
-import {FaIcon} from "../../../types/icons";
+import {FaIcon} from "../../../enums/icons";
 import Switch from "../../../components/utilities/ui/forms/switches/Switch.vue";
 
 const emit = defineEmits(['send']);

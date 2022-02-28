@@ -11,7 +11,7 @@
 
 <script setup>
 import {defineEmits, computed, onMounted, ref} from "vue";
-import {FaIcon} from "../../../../../types/icons";
+import {FaIcon} from "../../../../../enums/icons";
 
 const emit = defineEmits(['ready', 'click', 'mouseover', "mouseout"]);
 

@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref, watch, defineEmits} from "vue";
+import {ref, defineEmits} from "vue";
 import Button from "../forms/buttons/Button.vue";
 
 const props = defineProps({

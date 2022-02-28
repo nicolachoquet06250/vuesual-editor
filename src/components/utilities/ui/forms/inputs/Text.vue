@@ -18,7 +18,7 @@
 
 <script setup>
 import {ref, watch, defineEmits} from "vue";
-import {ValidateMoment} from "../../../../../types/input-validator";
+import {ValidateMoment} from "../../../../../enums/input-validator";
 import {match} from "../../../../../hooks/string";
 
 const props = defineProps({

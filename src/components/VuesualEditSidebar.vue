@@ -68,10 +68,10 @@
 <script setup>
 import {ref, defineEmits} from "vue";
 import {useModal} from "../hooks/modal";
-import {Modals} from '../types';
+import {Modals} from '../enums';
 import {useComponents} from "../hooks/editor-components";
 import Button from "./utilities/ui/forms/buttons/Button.vue";
-import {FaIcon} from "../types/icons";
+import {FaIcon} from "../enums/icons";
 import SimpleBox from "./utilities/ui/boxes/SimpleBox.vue";
 import FlexBox from "./utilities/ui/boxes/FlexBox.vue";
 import Container from "./utilities/grid/Container.vue";

@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-import {Modals} from '../types';
+import {Modals} from '../enums';
 import Modal from "./utilities/ui/modals/Modal.vue";
 import Container from "./utilities/grid/Container.vue";
 import Row from "./utilities/grid/Row.vue";
@@ -59,7 +59,7 @@ import Tabs from "./utilities/ui/tabs/Tabs.vue";
 import Tab from "./utilities/ui/tabs/Tab.vue";
 import TabContent from "./utilities/ui/tabs/TabContent.vue";
 import {useModal} from "../hooks/modal";
-import {FaIcon} from "../types/icons";
+import {FaIcon} from "../enums/icons";
 import Button from "./utilities/ui/forms/buttons/Button.vue";
 import {useComponents} from "../hooks/editor-components";
 import {computed, ref} from "vue";
