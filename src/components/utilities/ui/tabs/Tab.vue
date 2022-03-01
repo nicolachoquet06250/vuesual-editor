@@ -11,7 +11,7 @@
 
 <script setup>
 import {ref, defineEmits} from "vue";
-import Button from "../forms/buttons/Button.vue";
+import {Button} from '../forms';
 
 const props = defineProps({
   target: String,

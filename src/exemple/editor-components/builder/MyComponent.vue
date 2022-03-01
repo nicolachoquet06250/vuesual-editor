@@ -38,12 +38,12 @@
       <Repeater title="Repeater component title" add-label="Add text"
                 v-model="data.texts" void-model=""
                 @change="sendData()">
-        <template v-slot:default="{ i, change }">
+        <template v-slot:default="{ i }">
           <Row>
             <Col>
               <Text v-model="data.texts[i]"
                     :placeholder="wording.repeater.input.placeholder"
-                    @input="change()" />
+                     />
             </Col>
 
             <Col style="flex: .1">
@@ -106,21 +106,12 @@
 
 <script setup>
 import {computed, reactive, ref} from "vue";
-import { useElementSize } from '@vueuse/core';
-import SimpleBox from "../../../components/utilities/ui/boxes/SimpleBox.vue";
-import Text from "../../../components/utilities/ui/forms/inputs/Text.vue";
-import Container from "../../../components/utilities/grid/Container.vue";
-import Row from "../../../components/utilities/grid/Row.vue";
-import Col from '../../../components/utilities/grid/Col.vue';
-import Button from "../../../components/utilities/ui/forms/buttons/Button.vue";
-import Tabs from "../../../components/utilities/ui/tabs/Tabs.vue";
-import Tab from "../../../components/utilities/ui/tabs/Tab.vue";
-import TabContent from "../../../components/utilities/ui/tabs/TabContent.vue";
+import {useElementSize} from '@vueuse/core';
+import {SimpleBox, Repeater} from '../../../components/utilities/ui/boxes';
+import {Container, Row, Col} from '../../../components/utilities/grid';
+import {Button, Text, Switch, Dropdown, Option} from '../../../components/utilities/ui/forms';
+import {Tabs, Tab, TabContent} from '../../../components/utilities/ui/tabs';
 import {FaIcon} from "../../../enums/icons";
-import Switch from "../../../components/utilities/ui/forms/switches/Switch.vue";
-import Dropdown from "../../../components/utilities/ui/forms/dropdown/Dropdown.vue";
-import Option from "../../../components/utilities/ui/forms/dropdown/Option.vue";
-import Repeater from '../../../components/utilities/ui/boxes/Repeater.vue';
 
 const emit = defineEmits(['send']);
 const props = defineProps({
@@ -175,11 +166,6 @@ const texts = {
       }
       return r;
     }, []);
-    //sendData();
   }
 };
 </script>
-
-<style scoped>
-
-</style>

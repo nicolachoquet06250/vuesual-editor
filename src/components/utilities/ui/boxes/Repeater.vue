@@ -21,11 +21,9 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
-import Container from "../../grid/Container.vue";
-import Row from "../../grid/Row.vue";
-import Col from '../../grid/Col.vue';
-import Button from "../forms/buttons/Button.vue";
+import {ref, watch} from "vue";
+import {Container, Row, Col} from '../../grid';
+import {Button} from '../forms';
 
 const props = defineProps({
     title: String,
@@ -35,7 +33,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['update:modelValue', 'change']);
 
-const values = ref(props.modelValue);
+const values = ref(props.modelValue ?? []);
 
 watch(() => props.modelValue, () => {
     values.value = props.modelValue;
@@ -43,7 +41,16 @@ watch(() => props.modelValue, () => {
 });
 
 const handleAdd = () => {
-    values.value = [...values.value, props.voidModel];
+    if (typeof props.voidModel === "object") {
+        if (props.voidModel instanceof Array) {
+            values.value = [...values.value, [ ...props.voidModel ]];
+        } else {
+            values.value = [...values.value, { ...props.voidModel }];
+        }
+    } else {
+        values.value = [...values.value, props.voidModel];
+    }
+    
     emit('update:modelValue', values.value);
     emit('change', values.value);
 };

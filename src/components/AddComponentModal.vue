@@ -6,12 +6,12 @@
 
     <Tabs @loadDefaultTab="currentTab = $event.tab">
       <template v-slot:tab>
-        <Tab :target="cat"
+        <Tab :target="cat.slug"
              @click.stop="handleTitleClick($event)"
-             v-for="cat of categoryList" :key="cat"
-             :icon="cat === 'all' ? FaIcon.GLOBE : false"
-             :active="cat === currentTab">
-          {{cat}}
+             v-for="cat of categoryList" :key="cat.slug"
+             :icon="cat.slug === 'all' ? FaIcon.GLOBE : false"
+             :active="cat.slug === currentTab">
+          {{cat.name}}
         </Tab>
       </template>
 
@@ -23,22 +23,32 @@
                    v-if="row.length === 1">
                 <Button @click="createComponent(component.title)"
                         :active-color="'rgba(0, 0, 0, .5)'"
-                        style="display: flex; flex-direction: column; justify-content: space-between; align-items: center;"
-                        @mouseover="$event.target.querySelector('img') && ($event.target.querySelector('img').style.height = '32px')"
-                        @mouseout="$event.target.querySelector('img') && ($event.target.querySelector('img').style.height = '30px')">
-                  <img :src="component.imagePreview"
-                       style="height: 30px; transition: height .2s ease-out;"
-                       @mouseover="$event.target && ($event.target.style.height = '32px')"
-                       @mouseout="$event.target && ($event.target.style.height = '30px')" />
-                  {{component.title}}
+                        style="min-width: 200px;"
+                        @mouseover="$event.target.querySelector('img') && ($event.target.querySelector('img').style.height = '55px')"
+                        @mouseout="$event.target.querySelector('img') && ($event.target.querySelector('img').style.height = '50px')">
+                  <FlexBox :direction="'column'" :justify-content="'space-between'" :align-items="'center'">
+                    <img :src="component.imagePreview"
+                        style="height: 50px; transition: height .2s ease-out;"
+                        @mouseover="$event.target && ($event.target.style.height = '55px')"
+                        @mouseout="$event.target && ($event.target.style.height = '50px')" />
+                    {{component.title}}
+                  </FlexBox>
                 </Button>
               </Col>
 
               <Col v-else>
                 <Button @click="createComponent(component.title)"
-                        :no-border="true">
-                  <img :src="component.imagePreview" />
-                  {{component.title}}
+                        :no-border="true"
+                        style="min-width: 200px;"
+                        @mouseover="$event.target.querySelector('img') && ($event.target.querySelector('img').style.height = '55px')"
+                        @mouseout="$event.target.querySelector('img') && ($event.target.querySelector('img').style.height = '50px')">
+                  <FlexBox :direction="'column'" :justify-content="'space-between'" :align-items="'center'">
+                    <img :src="component.imagePreview"
+                        style="height: 50px; transition: height .2s ease-out;"
+                        @mouseover="$event.target && ($event.target.style.height = '55px')"
+                        @mouseout="$event.target && ($event.target.style.height = '50px')" />
+                    {{component.title}}
+                  </FlexBox>
                 </Button>
               </Col>
             </template>
@@ -51,16 +61,13 @@
 
 <script setup>
 import {Modals} from '../enums';
-import Modal from "./utilities/ui/modals/Modal.vue";
-import Container from "./utilities/grid/Container.vue";
-import Row from "./utilities/grid/Row.vue";
-import Col from "./utilities/grid/Col.vue";
-import Tabs from "./utilities/ui/tabs/Tabs.vue";
-import Tab from "./utilities/ui/tabs/Tab.vue";
-import TabContent from "./utilities/ui/tabs/TabContent.vue";
+import {Modal} from './utilities/ui/modals';
+import {Container, Row, Col} from './utilities/grid';
+import {Tabs, Tab, TabContent} from './utilities/ui/tabs';
 import {useModal} from "../hooks/modal";
 import {FaIcon} from "../enums/icons";
-import Button from "./utilities/ui/forms/buttons/Button.vue";
+import {Button} from './utilities/ui/forms';
+import {FlexBox} from './utilities/ui/boxes';
 import {useComponents} from "../hooks/editor-components";
 import {computed, ref} from "vue";
 
@@ -70,9 +77,9 @@ const { components, injectComponentInPage } = useComponents();
 const currentTab = ref();
 
 const categoryList = computed(() => {
-  return ['all', ...components.value.reduce((r, c) => {
-    if (r.indexOf((c.category.replace(/\ /g, '-').toLowerCase() ?? '')) === -1) {
-      return [...r, (c.category.replace(/\ /g, '-').toLowerCase() ?? '')];
+  return [{slug: 'all', name: 'All'}, ...components.value.reduce((r, c) => {
+    if (r.reduce((r, c) => [...r, c.slug], []).indexOf((c.category.replace(/\ /g, '-').toLowerCase() ?? '')) === -1) {
+      return [...r, { slug: (c.category.replace(/\ /g, '-').toLowerCase() ?? ''), name: c.category }];
     }
     return r;
   }, [])];

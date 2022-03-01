@@ -1,7 +1,12 @@
 import {useComponents} from "../../hooks/editor-components";
+
 import MyBuilderComponent from "../editor-components/builder/MyComponent.vue";
 import MyUiComponent from "../editor-components/ui/MyComponent.vue";
 import MyComponentImage from '../assets/my-component.png';
+
+import BuilderCardList from "../editor-components/builder/CardList.vue";
+import UICardList from "../editor-components/ui/CardList.vue";
+import CardListImage from '../assets/card-list.png';
 
 const { register } = useComponents();
 
@@ -12,15 +17,28 @@ const defaultData = {
 	select: 'tata'
 };
 
+const defaultCardList = {
+	cards: []
+}
+
 export const registerComponents = () => {
 	register({
-		title: 'My Component',
-		category: 'Content',
+		title: 'Composant de test',
+		category: 'Test',
 		builderComponent: MyBuilderComponent,
 		uiComponent: MyUiComponent,
 		data: defaultData,
 		imagePreview: MyComponentImage
 	});
+
+	register({
+		title: 'Liste de cartes',
+		category: 'Contenus',
+		builderComponent: BuilderCardList,
+		uiComponent: UICardList,
+		data: defaultCardList,
+		imagePreview: CardListImage
+	})
 
 	/*register({
 		title: 'My component 2',

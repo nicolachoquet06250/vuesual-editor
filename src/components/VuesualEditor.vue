@@ -32,7 +32,7 @@ import VuesualEditorContent from "./VuesualEditorContent.vue";
 import VuesualEditSidebar from "./VuesualEditSidebar.vue";
 import VueResizable from 'vue-resizable/src/components/vue-resizable.vue';
 import AddComponentModal from "./AddComponentModal.vue";
-import { useWindowSize } from "@vueuse/core";
+import {useWindowSize} from "@vueuse/core";
 
 defineEmits(['send']);
 defineProps({
@@ -53,6 +53,7 @@ const minSidebarWidth = computed(() => sidebarClosed.value ? 0 : 300);
 const _minSidebarWidth = computed(() => minSidebarWidth.value + 'px');
 const oldSidebarWidth = ref(minSidebarWidth.value);
 const resizerWidth = computed(() => sidebarClosed.value ? 0 : oldSidebarWidth.value);
+const cssResizerWidth = computed(() => resizerWidth.value + 'px');
 
 const handleResize = (e) => {
   if (!sidebarClosed.value) {
@@ -98,5 +99,10 @@ const handleResize = (e) => {
 .vuesual-editor .sidebar,
 .vuesual-editor .content {
   height: 100%;
+}
+
+.vuesual-editor .content {
+  width: calc(100% - v-bind(cssResizerWidth) - 1px);
+  overflow-y: auto;
 }
 </style>

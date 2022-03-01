@@ -33,7 +33,7 @@
 import {onClickOutside} from "@vueuse/core";
 import {useModal} from "../../../../hooks/modal";
 import {ref, useSlots} from "vue";
-import Button from "../forms/buttons/Button.vue";
+import {Button} from '../forms';
 
 const props = defineProps({
   name: String,

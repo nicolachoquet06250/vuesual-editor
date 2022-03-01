@@ -36,7 +36,7 @@
                             :icon="FaIcon.TRASH"
                             :no-border="true"
                             :active-color="'red'"
-                            @click="handleDeleteComponent(builderComponent.title, i)" />
+                            @click="handleDeleteComponent(i)" />
                   </FlexBox>
 
                 </Col>
@@ -70,13 +70,10 @@ import {ref, defineEmits} from "vue";
 import {useModal} from "../hooks/modal";
 import {Modals} from '../enums';
 import {useComponents} from "../hooks/editor-components";
-import Button from "./utilities/ui/forms/buttons/Button.vue";
+import {Button} from './utilities/ui/forms';
 import {FaIcon} from "../enums/icons";
-import SimpleBox from "./utilities/ui/boxes/SimpleBox.vue";
-import FlexBox from "./utilities/ui/boxes/FlexBox.vue";
-import Container from "./utilities/grid/Container.vue";
-import Row from "./utilities/grid/Row.vue";
-import Col from "./utilities/grid/Col.vue";
+import {SimpleBox, FlexBox} from './utilities/ui/boxes';
+import {Container, Row, Col} from './utilities/grid';
 
 const emit = defineEmits(['open', 'close', 'send']);
 
@@ -100,12 +97,12 @@ const handleSend = () => {
 const sendComponentData = (title, i, e) => {
   // console.log(title, i, e.data);
 
-  setData(title, i, e.data);
+  setData(i, e.data);
 };
 
-const handleDeleteComponent = (title, index) => {
+const handleDeleteComponent = (index) => {
   // console.log(title, index);
-  unregisterComponent(title, index);
+  unregisterComponent(index);
 };
 
 const handleExport = () => {

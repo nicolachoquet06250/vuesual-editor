@@ -20,9 +20,9 @@
 </template>
 
 <script setup>
-import Button from "../buttons/Button.vue";
-import { onMounted, ref, watch } from "vue";
-import { onClickOutside } from "@vueuse/core";
+import {Button} from '../index';
+import {ref, watch} from "vue";
+import {onClickOutside} from "@vueuse/core";
 
 const props = defineProps({
   modelValue: String,
