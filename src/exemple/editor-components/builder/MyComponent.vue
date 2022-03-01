@@ -35,36 +35,27 @@
         </Row>
       </Container>
 
-      <Container>
-        <Row>
-          <Col>
-            <h5> {{ wording.repeater.title }} </h5>
-          </Col>
-        </Row>
+      <Repeater title="Repeater component title" add-label="Add text"
+                v-model="data.texts" void-model=""
+                @change="sendData()">
+        <template v-slot:default="{ i, change }">
+          <Row>
+            <Col>
+              <Text v-model="data.texts[i]"
+                    :placeholder="wording.repeater.input.placeholder"
+                    @input="change()" />
+            </Col>
 
-        <Row v-for="(_, i) of data.texts" :key="i">
-          <Col>
-            <Text v-model="data.texts[i]"
-                  :placeholder="wording.repeater.input.placeholder"
-                  @input="sendData()" />
-          </Col>
-          <Col style="flex: .1">
-            <Button :icon="FaIcon.TRASH"
-                    :circle="true"
-                    :no-border="true"
-                    active-color="red"
-                    @click="texts.delete(i)" />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col style="display: flex; justify-content: flex-end">
-            <Button @click="texts.add()">
-              {{ wording.repeater.add_button.label }}
-            </Button>
-          </Col>
-        </Row>
-      </Container>
+            <Col style="flex: .1">
+              <Button :icon="FaIcon.TRASH"
+                      :circle="true"
+                      :no-border="true"
+                      active-color="red"
+                      @click="texts.delete(i)" />
+            </Col>
+          </Row>
+        </template>
+      </Repeater>
 
       <Container>
         <Row>
@@ -75,7 +66,7 @@
       </Container>
 
       <SimpleBox :py="5">
-        <Container class="repeater">
+        <Container>
           <Row>
             <Col>
               <Tabs :parent-width="cardWidth">
@@ -96,7 +87,7 @@
                 <TabContent id="coucou" style="min-height: 0; height: auto;">
                   <div>Coucou</div>
 
-                  <Switch v-model="data.checked">
+                  <Switch v-model="data.checked" @change="sendData()">
                     Un switch
                   </Switch>
                 </TabContent>
@@ -114,7 +105,7 @@
 </template>
 
 <script setup>
-import {computed, reactive, ref, watch} from "vue";
+import {computed, reactive, ref} from "vue";
 import { useElementSize } from '@vueuse/core';
 import SimpleBox from "../../../components/utilities/ui/boxes/SimpleBox.vue";
 import Text from "../../../components/utilities/ui/forms/inputs/Text.vue";
@@ -129,6 +120,7 @@ import {FaIcon} from "../../../enums/icons";
 import Switch from "../../../components/utilities/ui/forms/switches/Switch.vue";
 import Dropdown from "../../../components/utilities/ui/forms/dropdown/Dropdown.vue";
 import Option from "../../../components/utilities/ui/forms/dropdown/Option.vue";
+import Repeater from '../../../components/utilities/ui/boxes/Repeater.vue';
 
 const emit = defineEmits(['send']);
 const props = defineProps({
@@ -176,14 +168,6 @@ const currentCoucouTab = ref('coucou');
 const sendData = () => emit('send', { data: { ...data } });
 
 const texts = {
-  add() {
-    data.texts = [
-      ...data.texts,
-      ''
-    ]
-    sendData();
-  },
-
   delete(index) {
     data.texts = data.texts.reduce((r, c, i) => {
       if (i !== index) {
@@ -191,13 +175,9 @@ const texts = {
       }
       return r;
     }, []);
-    sendData();
+    //sendData();
   }
 };
-
-watch(() => data.checked, () => {
-  sendData()
-});
 </script>
 
 <style scoped>

@@ -3,7 +3,7 @@
     checked,
     switch: true
   }">
-    <input type="checkbox" :value="modelValue" @change="$emit('update:modelValue', !modelValue); checked = !checked" />
+    <input type="checkbox" :value="modelValue" @change="handleChange()" />
   </label>
 
   <label @click="checked = !checked">
@@ -12,15 +12,24 @@
 </template>
 
 <script setup>
-import {ref, defineEmits} from "vue";
+import {ref, defineEmits, watch} from "vue";
 
 const props = defineProps({
   modelValue: Boolean
 });
 
-defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'change']);
 
 const checked = ref(props.modelValue);
+
+const handleChange = () => {
+  emit('update:modelValue', !props.modelValue); 
+  checked.value = !checked.value;
+}
+
+watch(checked, () => {
+  emit('change', checked);
+})
 </script>
 
 <style scoped>

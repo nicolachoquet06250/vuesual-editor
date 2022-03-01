@@ -2,6 +2,7 @@
   <div class="vuesual-editor">
     <vue-resizable :width="resizerWidth"
                    :min-width="minSidebarWidth"
+                   :height="height"
                    :active="['r']"
                    :fit-parent="true"
                    @resize:move="handleResize($event)">
@@ -31,6 +32,7 @@ import VuesualEditorContent from "./VuesualEditorContent.vue";
 import VuesualEditSidebar from "./VuesualEditSidebar.vue";
 import VueResizable from 'vue-resizable/src/components/vue-resizable.vue';
 import AddComponentModal from "./AddComponentModal.vue";
+import { useWindowSize } from "@vueuse/core";
 
 defineEmits(['send']);
 defineProps({
@@ -45,6 +47,7 @@ const {
   onOpen: handleOpenSidebar,
   onClose: handleCloseSidebar
 } = useResize();
+const { height } = useWindowSize();
 
 const minSidebarWidth = computed(() => sidebarClosed.value ? 0 : 300);
 const _minSidebarWidth = computed(() => minSidebarWidth.value + 'px');

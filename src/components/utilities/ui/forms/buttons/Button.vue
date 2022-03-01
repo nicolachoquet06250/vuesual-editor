@@ -72,6 +72,10 @@ button.circle {
   border-radius: 30px;
 }
 
+button:not(.circle) i {
+  margin-right: 5px;
+}
+
 button.no-border {
   border: none;
 }
