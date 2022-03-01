@@ -30,7 +30,7 @@
 
 <script setup>
 import { useWindowSize } from '@vueuse/core';
-import { computed, watch } from 'vue-demi';
+import { computed, watch } from 'vue';
 import {Container, Row, Col, Column} from '../../../components/utilities/grid';
 
 defineProps({
