@@ -201,7 +201,7 @@ main.main {
 }
 
 footer.main {
-  height: 40px;
+  height: 50px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
