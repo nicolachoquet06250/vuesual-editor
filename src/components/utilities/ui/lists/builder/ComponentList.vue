@@ -16,7 +16,6 @@
                 
                 <Row>
                     <Col>
-                        {{chosenComponent}}
                         <ChosenBuilderComponent :data="chosenComponentData"
                                                 @send="handleSend($event)" />
                     </Col>
