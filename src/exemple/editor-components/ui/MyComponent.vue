@@ -1,7 +1,5 @@
 <template>
   <div>
-    <pre>{{data}}</pre>
-
     <p>{{data.text}}</p>
 
     <ul>
@@ -14,6 +12,13 @@
     <div v-else>😥</div>
 
     <ComponentList v-model="data.component.data.component" />
+
+    <ComponentList v-for="(component, i) of data.components" :key="i" 
+                   v-model="component.data.component" />
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <pre>{{data}}</pre>
   </div>
 </template>
 

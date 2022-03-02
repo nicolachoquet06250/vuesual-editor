@@ -103,6 +103,27 @@
 
       <ComponentList :default-component="data.component" 
                       @send="data.component = $event; sendData()" />
+
+      <Repeater title="Liste de composants" add-label="Ajouter un composant"
+                v-model="data.components" :void-model="componentModel"
+                @change="sendData()">
+        <template v-slot:default="{ i, change }">
+          <Row>
+            <Col>
+              <ComponentList :default-component="data.components[i]" 
+                              @send="data.components[i] = $event; change()" />
+            </Col>
+            
+            <Col style="flex: .1">
+              <Button :icon="FaIcon.TRASH"
+                      :circle="true"
+                      :no-border="true"
+                      active-color="red"
+                      @click="components.delete(i)" />
+            </Col>
+          </Row>
+        </template>
+      </Repeater>
     </SimpleBox>
   </div>
 </template>
@@ -151,8 +172,18 @@ const data = reactive({
   texts: props.data?.texts ?? [],
   checked: props.data?.checked ?? false,
   select: props.data.select ?? 'toto',
-  component: props.data?.component ?? {}
+  component: props.data?.component ?? {},
+  components: props.data?.components ?? []
 });
+
+const componentModel = {
+  data: {
+    component: {
+      slug: 'liste-de-cartes',
+      data: {}
+    }
+  }
+};
 
 const card = ref();
 const { width } = useElementSize(card);
@@ -173,4 +204,19 @@ const texts = {
     }, []);
   }
 };
+
+const components = {
+  delete(index) {
+    data.components = data.components.reduce((r, c, i) => {
+      if (i !== index) {
+        return [...r, c];
+      }
+      return r;
+    }, []);
+  }
+};
+
+const handleRepeaterChange = e => {
+  console.log('handleRepeaterChange', (e ?? null));
+}
 </script>
