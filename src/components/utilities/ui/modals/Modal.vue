@@ -12,6 +12,7 @@
         </div>
 
         <Button :circle="true"
+                autofocus
                 :no-border="true"
                 :close="true"
                 :active-color="'red'"
@@ -30,7 +31,7 @@
 </template>
 
 <script setup>
-import {onClickOutside} from "@vueuse/core";
+import {onClickOutside, onKeyUp} from "@vueuse/core";
 import {useModal} from "../../../../hooks/modal";
 import {ref, useSlots} from "vue";
 import {Button} from '../forms';
@@ -52,6 +53,9 @@ props.name && registerModal(props.name, modal);
 onClickOutside(modalContent, e => {
   props.name && closeModal(props.name)
 });
+onKeyUp('Escape', () => {
+  props.name && closeModal(props.name)
+})
 </script>
 
 <style scoped>
@@ -79,7 +83,6 @@ onClickOutside(modalContent, e => {
   max-width: calc(100% - 20px);
   min-height: 200px;
   max-height: calc(100vh - 20px);
-  /*overflow-y: auto;*/
   background: white;
 
   display: flex;
