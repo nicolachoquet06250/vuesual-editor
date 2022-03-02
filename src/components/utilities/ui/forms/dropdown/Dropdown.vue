@@ -7,7 +7,7 @@
             aria-expanded="false"
             @click="toggleOpened()"
             @ready="dropdown = $event">
-      {{modelValue}}
+      {{label ?? modelValue}}
       <i class="fa-solid fa-caret-down"></i>
     </Button>
 
@@ -25,6 +25,7 @@ import {ref, watch} from "vue";
 import {onClickOutside} from "@vueuse/core";
 
 const props = defineProps({
+  label: String,
   modelValue: String,
   selected: String
 });

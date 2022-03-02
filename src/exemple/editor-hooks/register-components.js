@@ -28,7 +28,8 @@ export const registerComponents = () => {
 		builderComponent: MyBuilderComponent,
 		uiComponent: MyUiComponent,
 		data: defaultData,
-		imagePreview: MyComponentImage
+		imagePreview: MyComponentImage,
+		recursive: true
 	});
 
 	register({
@@ -37,7 +38,8 @@ export const registerComponents = () => {
 		builderComponent: BuilderCardList,
 		uiComponent: UICardList,
 		data: defaultCardList,
-		imagePreview: CardListImage
+		imagePreview: CardListImage,
+		recursive: false
 	})
 
 	/*register({

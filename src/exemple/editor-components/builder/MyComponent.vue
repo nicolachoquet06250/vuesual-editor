@@ -100,6 +100,9 @@
           </Row>
         </Container>
       </SimpleBox>
+
+      <ComponentList :default-component="data.component" 
+                      @send="data.component = $event; sendData()" />
     </SimpleBox>
   </div>
 </template>
@@ -111,6 +114,7 @@ import {SimpleBox, Repeater} from '../../../components/utilities/ui/boxes';
 import {Container, Row, Col} from '../../../components/utilities/grid';
 import {Button, Text, Switch, Dropdown, Option} from '../../../components/utilities/ui/forms';
 import {Tabs, Tab, TabContent} from '../../../components/utilities/ui/tabs';
+import {ComponentList} from '../../../components/utilities/ui/lists/builder';
 import {FaIcon} from "../../../enums/icons";
 
 const emit = defineEmits(['send']);
@@ -146,7 +150,8 @@ const data = reactive({
   text: props.data?.text ?? '',
   texts: props.data?.texts ?? [],
   checked: props.data?.checked ?? false,
-  select: props.data.select ?? 'toto'
+  select: props.data.select ?? 'toto',
+  component: props.data?.component ?? {}
 });
 
 const card = ref();

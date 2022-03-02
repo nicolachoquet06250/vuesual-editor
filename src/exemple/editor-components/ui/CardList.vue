@@ -54,7 +54,7 @@ const colStyle = computed(() => width.value < 1000 ? {
 } : {});
 
 watch(width, () => {
-    console.log(width.value, GridType.value);
+    //console.log(width.value, GridType.value);
 })
 
 const cardContent = content => {
