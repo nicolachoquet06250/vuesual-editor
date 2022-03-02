@@ -40,6 +40,7 @@
                 <Button @click="createComponent(component.title)"
                         :no-border="true"
                         style="min-width: 200px;"
+                        :active-color="'rgba(0, 0, 0, .5)'"
                         @mouseover="$event.target.querySelector('img') && ($event.target.querySelector('img').style.height = '55px')"
                         @mouseout="$event.target.querySelector('img') && ($event.target.querySelector('img').style.height = '50px')">
                   <FlexBox :direction="'column'" :justify-content="'space-between'" :align-items="'center'">
